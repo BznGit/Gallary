@@ -1,23 +1,37 @@
-const axios = require('axios');
-const settings = require('../settings.json'); 
-const ip = settings.freaPoolApiEndpoint;
+const fs = require('fs/promises');
 
-let ApiController = class {
+let FileController = class {
 
   // Запрос информации одной ноды -----------------------------------------------------------------------------/
-  async getOneNode(){
-    let obj = null;
+  async getDir(){
+    let obj={};
     try{
-      await axios.get(ip + ':7000'  + '/general'  ,{agent:false}).then(res => {
-        obj = res.data;  
+        await fs.readdir('./data', (err, dir) => {
+        if (err) throw err; 
+        return dir
+      }).then(folders=>{
+            folders.forEach(async(item)=> {
+       return await fs.readdir('./data/' + item, (err, files) => {
+          
+          console.log('>>--', files);  
+          obj[item] = files;
+          return obj;
+        }); 
+      });
       })
-    }catch(err){
-      console.log('getOneNode error!', err);
-    }
-    return obj;  
-  };
-
+  
+        
+   
+        // не прочитать содержимое папки
+      
+    
+      
  
+    }catch(err){
+      console.log('FileController error!', err);
+    }
+
+  };
 }
 
-module.exports = ApiController;
+module.exports = FileController;

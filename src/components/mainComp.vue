@@ -1,10 +1,10 @@
 <template>
  <div class="content">
     <div class="content__item">
-      <img src="../../public/photo/1.jpg" loading="lazy" alt="rtr" class="lazyload" >
-      <img src="../../public/photo/2.jpg" loading="lazy" alt="rtr" class="lazyload">
-      <img src="../../public/photo/3.jpg" loading="lazy" alt="rtr" class="lazyload" >
-      <img src="../../public/photo/1.jpg" loading="lazy" alt="rtr" class="lazyload">
+      <img src="../../data/women/1.jpg" loading="lazy" alt="rtr" class="lazyload" >
+      <img src="../../data/women/2.jpg" loading="lazy" alt="rtr" class="lazyload">
+      <img src="../../data/women/3.jpg" loading="lazy" alt="rtr" class="lazyload" >
+      <img src="../../data/women/6.jpg" loading="lazy" alt="rtr" class="lazyload">
  
     
     </div>
