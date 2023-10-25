@@ -67,7 +67,7 @@ export default {
 .content__item{
   display: block;
   overflow: scroll;
-  height: 500px;
+  height: 600px;
   width: 500px;
 }
 img{
