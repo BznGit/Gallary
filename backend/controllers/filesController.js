@@ -10,18 +10,14 @@ let FileController = class {
         if (err) throw err; 
         return dir
       });
-      console.log(folders)
-      await Promise.allSettled(folders.map(item=>{
-      console.log(item)
-         fs.readdir('./data/' + item, (err, files) => {
-              return files;
-             
-          }).then(files=>obj[item] = files)
-
-        }) 
-      )
-      return obj   
-    
+      await Promise.allSettled(folders.map(item=>
+        fs.readdir('./data/' + item))).then(res=> {
+          res.map((item, k )=>{
+            let arr = item.value;
+            obj[folders[k]] = arr
+          })
+        })
+      return obj
        
     }catch(err){
       console.log('FileController error!', err);
