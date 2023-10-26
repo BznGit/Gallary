@@ -3,11 +3,8 @@ const route = express.Router();
 const File = require('../controllers/filesController');
 const file = new File();
 
-route.get('/', function(reg, res, next){
-    file.getDir().then(res=>console.log('>>',res))
-    res.send ('Адрес не найден!')
-          
-
+route.get('/albums', function(reg, res, next){
+    file.getDir().then(arr=>res.send(arr))
 });
 
 

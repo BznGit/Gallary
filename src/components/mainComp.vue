@@ -1,14 +1,11 @@
 <template>
  <div class="content">
-    <div class="content__item">
-      <img src="../../data/women/1.jpg" loading="lazy" alt="rtr" class="lazyload" >
-      <img src="../../data/women/2.jpg" loading="lazy" alt="rtr" class="lazyload">
-      <img src="../../data/women/3.jpg" loading="lazy" alt="rtr" class="lazyload" >
-      <img src="../../data/women/6.jpg" loading="lazy" alt="rtr" class="lazyload">
- 
-    
-    </div>
-
+    <router-link :to="`/` + key" v-for="(album, key) in gallary" :key="key"   class="content__item" >
+      <div class="content-item-img">
+        <img :src="`./data/` + key +`/`+ album[0]" alt="" class="lazyload">
+      </div>
+      <p>{{ key }}</p>
+    </router-link>
  </div>
 
 </template>
@@ -18,15 +15,11 @@
 export default {
   name: 'TableList',
   props: {
-    users:{
-      type: Array,
-      required: true,
-     
-  }
+   gallary : Object,
  },
   data(){
     return{
-
+     
     }  
   },
   methods:{
@@ -50,7 +43,12 @@ export default {
     }
   },
   mounted(){
-    //this.download(6)
+    console.log(this.gallary)
+    /*fetch('/albums').then(res =>  res.ok ? res.json():res.text())
+    .then(data => {
+      this.data = data;
+      console.log(this.data)
+    })*/
         
   },
   computed:{
@@ -64,23 +62,33 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.content__item{
-  display: block;
-  overflow: scroll;
-  height: 600px;
-  width: 500px;
+.content{
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  justify-content: center
 }
-img{
-  height:  100%;
-    border: 0; /* 1 */
-    -ms-interpolation-mode: bicubic; /* 2 */
 
+.content__item{
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  height: 200px;
+  width: 200px;
+  text-transform: uppercase;
+  
 }
-.lazyload{
+.content-item-img{
+  height: 200px;
+  width: 200px;
+}
+
+img{
     display: block;
-    height: 600px;
+    height: 200px;
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 </style>

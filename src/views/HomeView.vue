@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <Main msg="Welcome to Your Vue.js App"/>
+    <Main :gallary="gallary"/>
   </div>
+  
 </template>
 
 <script>
@@ -12,6 +13,10 @@ export default {
   name: 'TableComp',
   components: {
     Main
-  }
+  },  
+  props: {
+    gallary :  Object,
+  
+ },
 }
 </script>
