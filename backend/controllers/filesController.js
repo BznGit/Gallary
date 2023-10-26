@@ -6,31 +6,26 @@ let FileController = class {
   async getDir(){
     let obj={};
     try{
-        await fs.readdir('./data', (err, dir) => {
+      let folders = await fs.readdir('./data', (err, dir) => {
         if (err) throw err; 
         return dir
-      }).then(folders=>{
-            folders.forEach(async(item)=> {
-       return await fs.readdir('./data/' + item, (err, files) => {
-          
-          console.log('>>--', files);  
-          obj[item] = files;
-          return obj;
-        }); 
       });
-      })
-  
-        
-   
-        // не прочитать содержимое папки
-      
+      console.log(folders)
+      await Promise.allSettled(folders.map(item=>{
+      console.log(item)
+         fs.readdir('./data/' + item, (err, files) => {
+              return files;
+             
+          }).then(files=>obj[item] = files)
+
+        }) 
+      )
+      return obj   
     
-      
- 
+       
     }catch(err){
       console.log('FileController error!', err);
     }
-
   };
 }
 
