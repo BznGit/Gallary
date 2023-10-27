@@ -23,6 +23,20 @@ let FileController = class {
       console.log('FileController error!', err);
     }
   };
+  async setDir(dir){
+   
+    try{
+      let err = false
+     await fs.mkdir('./data/' + dir).catch(e=>err = true)
+      
+        return err
+    
+    
+             
+    }catch(err){
+      console.log('FileController error!', err);
+    }
+  };
 }
 
 module.exports = FileController;

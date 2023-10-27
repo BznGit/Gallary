@@ -2,11 +2,10 @@
  <div class="content">
   <router-link :to="`/`+fold +`/` + item" v-for="(item, key) in gallary[fold]" :key="key"   class="content__item">
       <div class="content-item-img">
-        <img :src="`./data/`+ fold +`/` + item" alt="" class="lazyload">
+        <img :src="`./data/`+ fold +`/` + item" alt="item" loading="lazy" >
       </div>
       <p>{{ item }}</p>
-    </router-link>
-  
+  </router-link>
  </div>
 
 </template>
@@ -44,9 +43,13 @@ export default {
 <style scoped>
 .content{
   display: flex;
-  flex-direction: row;
+
   padding: 20px;
-  justify-content: center
+
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;;
 }
 
 .content__item{
@@ -56,6 +59,7 @@ export default {
   height: 200px;
   width: 200px;
   text-transform: uppercase;
+  
   
 }
 .content-item-img{

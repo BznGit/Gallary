@@ -2,7 +2,7 @@
   <div class="back"></div>
   <div class="main">
       <div class="text">
-        <span>Добавить пользователя</span>
+        <span>Добавить папку</span>
       </div>
       <div class="image">
         <div class="imgcont" >
@@ -11,11 +11,8 @@
         <img  class="im" @click="addFile" src="../assets/edit.svg">
       </div>
       <div class="inputs">
-        <input type="text" placeholder="Имя" v-model="user.name">
-        <input type="text" placeholder="Фамилия" v-model="user.secondName">
-        <input type="text" placeholder="Номер" v-model="user.number">
-        <input type="text" placeholder="Электронная почта" v-model="user.addres">
-        <input type="text" placeholder="Адрес" v-model="user.mail">
+        <input type="text" placeholder="Имя" v-model="folder.name">
+       
       </div>
       <div class="butGrup">
         <div class="sv" @click="save">
@@ -32,13 +29,13 @@
 
 <script>
 export default {
-  name: 'AddUser',
+  name: 'AddFolder',
   props: {
     msg: String
   },
   data(){
     return {
-      user: {
+      folder: {
         name:null,
         number: null,
         secondName: null,
@@ -56,7 +53,7 @@ export default {
       this.$emit("close-addmenu")
     },
     save(){
-      this.$emit("save-newuser", this.user)
+      this.$emit("save-folder", this.user)
     },
      addFile(){
 

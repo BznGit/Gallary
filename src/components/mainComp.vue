@@ -1,8 +1,9 @@
 <template>
  <div class="content">
-    <router-link :to="`/` + key" v-for="(album, key) in gallary" :key="key"   class="content__item" >
+    <router-link :to="`/` + key" v-for="(album, key) in gallary" :key="album"   class="content__item" >
       <div class="content-item-img">
-        <img :src="`./data/` + key +`/`+ album[0]" alt="" class="lazyload">
+        <img v-if = "album[0]" :src="`./data/` + key +`/`+ album[0]" alt="" class="lazyload">
+        <img  v-if = "!album[0]" src="../assets/folder.svg" alt="" class="place">
       </div>
       <p>{{ key }}</p>
     </router-link>
@@ -19,7 +20,7 @@ export default {
  },
   data(){
     return{
-     
+      placeholderVis: false
     }  
   },
   methods:{
@@ -44,11 +45,11 @@ export default {
   },
   mounted(){
     console.log(this.gallary)
-    /*fetch('/albums').then(res =>  res.ok ? res.json():res.text())
+    fetch('/albums').then(res =>  res.ok ? res.json():res.text())
     .then(data => {
       this.data = data;
       console.log(this.data)
-    })*/
+    })
         
   },
   computed:{
@@ -64,9 +65,12 @@ export default {
 <style scoped>
 .content{
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  width: 89vw;
+  height: max-content;
   padding: 20px;
-  justify-content: center
+  justify-content: center;
+
 }
 
 .content__item{
@@ -90,5 +94,7 @@ img{
     object-fit: cover;
     border-radius: 10px;
 }
+.place{
 
+}
 </style>

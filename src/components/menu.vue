@@ -2,32 +2,35 @@
   <div class="back" @click="closeMenu"></div>
     <div class="circle-menu">
       <div class="circle">
-          <div class="circle-sector sector-01" @mouseenter="hoverIn"  @mouseleave="hoverOut" @click="addUser">
+          <div class="circle-sector sector-01" @click="addFolder">
               <div class="sector-text">
-                <img  class="img" src="../assets/add.svg">
-                <img  class="img vis" src="../assets/addWhite.svg">
-                <span>Добавить пользователя</span>
+              <!--  <img  class="img" src="../assets/add.svg">
+                <img  class="img vis" src="../assets/addWhite.svg">-->
+                <span>Добавить папку</span>
               </div>
           </div>
-          <div class="circle-sector sector-02" @mouseenter="hoverIn"  @mouseleave="hoverOut">
+          <div class="circle-sector sector-02" >
               <div class="sector-text">
-                <img  class="img " src="../assets/import.svg">
-                <img  class="img vis" src="../assets/importWhite.svg">
-                <span>Импортировать контакты</span>
+              <!--  <img  class="img " src="../assets/import.svg">
+                <img  class="img vis" src="../assets/importWhite.svg">-->
+            
+                <span>Удалить</span>
+                <span>картинку</span>
               </div>
           </div>
-          <div class="circle-sector sector-03" @mouseenter="hoverIn"  @mouseleave="hoverOut">
+          <div class="circle-sector sector-03" >
               <div class="sector-text">
-                <img  class="img " src="../assets/edit.svg">
-                <img  class="img vis" src="../assets/editWhite.svg">
-                <span>Редактировать</span>
+                <!--<img  class="img " src="../assets/edit.svg">
+                <img  class="img vis" src="../assets/editWhite.svg">-->
+                <span>Удалить папку</span>
               </div>
           </div>
-          <div class="circle-sector sector-04 " @mouseenter="hoverIn"  @mouseleave="hoverOut">
+          <div class="circle-sector sector-04 " >
               <div class="sector-text" >
-                <img  class="img" src="../assets/export.svg">
-                <img  class="img vis" src="../assets/exportWhite.svg">
-                <span>Экспортировать контакты</span>
+              <!--  <img  class="img" src="../assets/export.svg">
+                <img  class="img vis" src="../assets/exportWhite.svg">-->
+                <span>Добавить</span>
+                <span>картинку</span>
               </div>
           </div>
       </div>
@@ -42,19 +45,10 @@ export default {
     msg: String
   },
   methods:{
-    hoverIn(e){
-      let el = e.target.querySelectorAll ('img');
-    
-      el[0].classList.add('vis');
-      el[1].classList.remove('vis')
-    },
-    hoverOut(e){
-      let el = e.target.querySelectorAll ('img');
-      el[1].classList.add('vis');
-      el[0].classList.remove('vis')
-    },
-    addUser(){
-      this.$emit('add-user')
+  
+    addFolder(){
+      console.log('add folder')
+      this.$emit('add-folder')
     },
     closeMenu(){
       this.$emit('close-menu')
@@ -119,6 +113,7 @@ img{
         height: 150px;
         width: 150px;
         z-index: 1;
+        word-break:break-all;
     }
     .circle-sector:after {
         border: 200px solid transparent;
@@ -129,6 +124,7 @@ img{
         width: 100px;
         content: '';
         z-index: 1;
+        
     }
     .circle-sector.checked:after {
         border: 200px solid #273B69;
@@ -191,6 +187,6 @@ img{
         z-index: 2;
         display: flex;
         flex-direction: column;
-       
+        word-break:break-all;
     }
 </style>

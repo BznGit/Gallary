@@ -1,17 +1,26 @@
 <template>
-  <Header @open-menu="openMenu" @search="search"/>
+  <Header @open-menu="menuVis=true" @search="search" />
   <router-view :gallary = "gallary"/>
-  
+  <Menu v-if="menuVis"   @close-menu="menuVis=false" @add-folder="addFolderVis=true"/>
+  <AddFolder v-if="addFolderVis"   @close-addmenu="addFolderVis=false" @save-folder="saveFolder" />
 </template>
 <script>
  import Header from './components/headerComp.vue'; 
+ import Menu from './components/menu.vue'; 
+ import AddFolder from './components/addFolder.vue'; 
+
  export default{
   name: 'App',
   components:{
-    Header
+    Header,
+    Menu,
+    AddFolder
+
   },
     data(){
     return{
+      menuVis:false,
+      addFolderVis: false,
       gallary: {
             men: [
               "1m.jpg",
@@ -28,17 +37,23 @@
               "4.jpg",
               "5.jpg",
               "6.jpg"
-            ]
+            ], 
+            ass:[]
           },
     }  
   },
   mounted(){
-    console.log(this.data)
-    /*fetch('/albums').then(res =>  res.ok ? res.json():res.text())
+    console.log(this.gallary)
+    fetch('/albums').then(res =>  res.ok ? res.json():res.text())
     .then(data => {
-      this.data = data;
-      console.log(this.data)
-    })*/
+      this.gallary = data;
+      console.log(this.gallary)
+    })
+  },
+  methods:{
+    saveFolder(item){
+      console.log(item)
+    }
   }
  } 
 
