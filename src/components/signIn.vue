@@ -1,22 +1,36 @@
 <template>
   <div class="back"></div>
-  <div class="main">
-      <div class="text">
-        <span>Добавить картинку</span>
-        <img  id="foto1" src="../assets/user.svg">
-      </div>
-      <div v-if="exists" class="">Такой фацл уже существует</div>
-      <div class="inputs" @click="addFile">
-        <span>Выбрать файл</span>
-      </div>
-      <div class="butGrup">
-        <div class="sv" @click="saveFile">
-            <span>СОХРАНИТЬ</span>
+
+
+  <div class="main" >
+    <div class="butGrup" v-if="sigin">
+        <div class="sv" @click="outsignin">
+            <span>Выйти</span>
         </div>
         <div class="cl" @click="cansel">
           <span>ОТМЕНА</span>
         </div>
       </div>
+      <div v-if="!sigin">
+        <div class="text">
+          <span>Администратор</span>
+        </div>
+        <div v-if="exists" class="">Не верно</div>
+        <div class="inputs">
+
+          <input type="text" placeholder="Логин" v-model="user.name">
+          <input type="password" placeholder="Пароль" v-model="user.paasword">
+        </div>
+        <div class="butGrup">
+          <div class="sv" @click="save">
+              <span>Войти</span>
+          </div>
+          <div class="cl" @click="cansel">
+            <span>ОТМЕНА</span>
+          </div>
+        </div>
+      </div>
+
   </div>
     
   
@@ -27,59 +41,58 @@ export default {
   name: 'AddFolder',
   props: {
     msg: String,
-    currFold: String
+    out:String
   },
   data(){
     return {
-      avatar: null,
-      file: null,
-          exists: false
+     
+      user: {
+        name:'admin',
+        paasword: 'admin'
+      },
+      exists: false
       }
     },
 
   methods:{
-    addFile(){
-      console.log(this.currFold)
-      let input = document.createElement('input' );
-      input.type = 'file';
-      input.setAttribute('multiple','')
-      input.click();
-      input.onchange = (e) => {
-      document.getElementById('foto1').src =  URL.createObjectURL(e.target.files[0]);
-      this.avatar = URL.createObjectURL(e.target.files[0]);
-      this.file = e.target.files[0]
-      };	
-
-    },
-
-    saveFile(){
-      let formData = new FormData();
-      console.log(this.file)
-      formData.append('file', this.file, this.file.name);
-      console.log(formData)
-      fetch('/upload/'+ this.currFold + '/' + this.file.name, {
-        method: 'POST',
-        body: formData
-      }).then(res=>res.text()).then(ass=>{
-
-        if(ass=='exists') {
-          alert('Файл '+ this.file.name +  ' уже существует!')
-          this.file.name = '';
-          this.$emit("close-addImage")
-        } else{
-          this.$emit("close-addImage")
-          this.$router.go(0);
-          
-        } 
-        })	
-    },
-
     cansel(){
       console.log('ddddd')
-      this.$emit("close-addImage")
+      this.$emit("close-signin")
     },
+    outsignin(){
+      //this.sigin = false;
+      this.$emit("out-signin")
+      this.$emit("close-signin")
+    },
+    save(){
    
+      console.log(this.user)
+      fetch('/admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authentication: 'secret'
+        },
+        body: JSON.stringify(this.user)
+      }).then(res=>res.text()).then(ass=>{
+        console.log(ass)
+        if(ass=='ok') {
+          this.sigin = true;
+          this.$emit("signgood")
+          this.$emit("close-signin")
+        } else{
+          alert('Неправильный логин или пароль!')
+          this.$emit("close-signin")
+        } 
+      })
+    },
   },
+  computed:{
+    sigin: function(){
+      let a = null
+      if(this.out==='Выйти'){a=true; return  a} else {a=false; return a } 
+    }
+  }
    
 }
 </script>
@@ -110,9 +123,6 @@ export default {
  
 }
 .text{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   align-items: center;
   margin-top: 20px;
   color: #273B69;
@@ -130,7 +140,6 @@ export default {
 }     
 
 img{
-  margin-top: 20px;
    height: 80px;
 }
 .image{
@@ -148,24 +157,11 @@ img{
 }
 .inputs{
   display: flex;
-  margin-top: 20px;
-  height: 50px;
-  width: 200px;
-  background-color: #273B69;
-  color: aliceblue;
   align-self: center;
   align-items: center;
-  cursor: pointer;
   flex-direction: column;
-  border-radius: 10px;
-  justify-content: center;
-}
-.inputs:hover{
-  color: red;
-
-}
-span{
-  display: flex;
+  
+  
 }
 input{
   margin-top: 20px;

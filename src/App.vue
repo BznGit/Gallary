@@ -1,27 +1,37 @@
 <template>
-  <Header @open-menu="menuVis=true" @search="search" />
-  <router-view :gallary = "gallary"/>
-  <Menu v-if="menuVis"   @close-menu="menuVis=false" @add-folder="addFolderVis=true"/>
+  <Header @open-menu="menuVis=true" @search="search" :admin="admin" @open-signin="signInVis=true" :out="out"/>
+  <router-view :gallary = "gallary" @curr-fold="getGurrFold" :admin="admin"/>
+  <Menu v-if="menuVis"   @close-menu="menuVis=false" @add-folder="addFolderVis=true" @add-file="addImageVis=true" :currFold="currFold" />
   <AddFolder v-if="addFolderVis"   @close-addmenu="addFolderVis=false" @save-folder="saveFolder" />
+  <AddImage v-if="addImageVis"   @close-addImage="addImageVis=false"  :currFold="currFold"/>
+  <SignIn v-if="signInVis"   @close-signin="signInVis=false" @signgood="admin=true; out='Выйти'"  @out-signin="outSignin" :out="out"/>
 </template>
 <script>
  import Header from './components/headerComp.vue'; 
  import Menu from './components/menu.vue'; 
  import AddFolder from './components/addFolder.vue'; 
+ import AddImage from './components/addImage.vue';
+ import SignIn from './components/signIn.vue';
 
  export default{
   name: 'App',
   components:{
     Header,
     Menu,
-    AddFolder
-
+    AddFolder,
+    AddImage,
+    SignIn
   },
     data(){
     return{
+      admin: false,
+      out: 'Войти',
+      signInVis: false,
       menuVis:false,
       addFolderVis: false,
-      gallary: {
+      addImageVis: false,
+      currFold: null,
+      gallary: null/*{
             men: [
               "1m.jpg",
               "2m.jpg",
@@ -39,8 +49,11 @@
               "6.jpg"
             ], 
             ass:[]
-          },
+          },*/
     }  
+  },
+  beforeCreate(){
+
   },
   mounted(){
     console.log(this.gallary)
@@ -51,8 +64,21 @@
     })
   },
   methods:{
+    outSignin(){
+      this.admin = false;
+      this.out = 'Войти'
+    },
     saveFolder(item){
       console.log(item)
+    },
+    getGurrFold(id){
+      console.log(id)
+      this.currFold = id
+    }
+  },
+  watch: {
+    $route(to) {
+      if(to.fullPath=='/') this.currFold = null
     }
   }
  } 

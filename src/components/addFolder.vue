@@ -7,7 +7,6 @@
       <div v-if="exists" class="">Папка существует</div>
       <div class="inputs">
         <input type="text" placeholder="Имя папки" v-model="folder.name">
-       
       </div>
       <div class="butGrup">
         <div class="sv" @click="save">
@@ -56,7 +55,9 @@ export default {
         if(ass=='exists') {
           alert('Папка '+ this.folder.name +  ' уже существует!')
           this.folder.name = '';
+          this.$emit("close-addmenu")
         } else{
+          this.$router.go(0);
           this.$emit("close-addmenu")
         } 
       })

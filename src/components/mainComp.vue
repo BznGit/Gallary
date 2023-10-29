@@ -1,63 +1,69 @@
 <template>
  <div class="content">
-    <router-link :to="`/` + key" v-for="(album, key) in gallary" :key="album"   class="content__item" >
+ 
+    <div  v-for="(album, key) in gallary" :key="album"  :id="key"  class="content__item" >
       <div class="content-item-img">
         <img v-if = "album[0]" :src="`./data/` + key +`/`+ album[0]" alt="" class="lazyload">
         <img  v-if = "!album[0]" src="../assets/folder.svg" alt="" class="place">
       </div>
-      <p>{{ key }}</p>
-    </router-link>
+      <div class="content-item__menu">
+        <router-link :to="`/` + key" >{{ key }} ({{ album.length }})</router-link>
+        <img   src="../assets/menu2.svg"  @click="openItemMenu(key)"  class="img-menu" v-if="admin">
+      </div>
+      
+      <ItemMenu @close-item-menu="closeItemMenu"  @delete-item="deleteItem" :id="key +'-menu'" class="item-menu" :currId = "currId" />
+    </div>
  </div>
 
 </template>
 
 <script>
-
+import ItemMenu from './itemMenu.vue'
 export default {
   name: 'TableList',
+  components:{
+    ItemMenu: ItemMenu,
+  },
   props: {
    gallary : Object,
+   admin: Boolean,
  },
   data(){
     return{
-      placeholderVis: false
+      placeholderVis: false,
+      currId: null,
+      fold: this.$route.params.file
     }  
   },
   methods:{
-    chooseItem(e){ 
-     
-      let all = document.querySelectorAll('.disvis');
-      all.forEach(item=>{
-        let tr = item.parentElement;
-          tr.parentElement.classList.remove('bkgrnd');
-          item.classList.remove('disvis');
+    deleteItem(id){ 
+      let elem2 = document.getElementById(id)
+      elem2.style.display = 'none';
+      fetch('/delete/' + id).then(res =>  res.ok ? res.json():res.text())
+      .then(data => {
+        this.data = data;
+        console.log(this.data)
+        this.$router.go(0);
       })
-      let el  = document.getElementById(e)
-      let but = el.querySelector('.vis'); 
-      el.classList.add('bkgrnd');
-      but.classList.add('disvis');
       
     },
-    openEditMenu(id){
-
-      this.$emit('open-edit', id );
+    openItemMenu(id){
+      let elem = document.getElementById(id+'-menu')
+      elem.style.display = 'flex';
+      this.currId = id;
+    },
+    closeItemMenu(id){
+      let elem = document.getElementById(id + '-menu')
+      elem.style.display = 'none'
     }
+
   },
   mounted(){
-    console.log(this.gallary)
-    fetch('/albums').then(res =>  res.ok ? res.json():res.text())
-    .then(data => {
-      this.data = data;
-      console.log(this.data)
-    })
+   
+   console.log(this.admin)
         
   },
-  computed:{
-    
 
-  }
-
- 
 }
 </script>
 
@@ -70,10 +76,12 @@ export default {
   height: max-content;
   padding: 20px;
   justify-content: center;
+  
 
 }
 
 .content__item{
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -94,7 +102,30 @@ img{
     object-fit: cover;
     border-radius: 10px;
 }
-.place{
+.content-item__menu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: center;
+
+}
+.img-menu{
+  height: 40px;
+  width: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+}
+.img-menu:hover{
+  transform: scale(1.2)
+}
+.item-menu{
+  position: absolute;
+  top: 235px;
+  left: 160px;
+  display: none;
+  z-index: 3;
 
 }
 </style>

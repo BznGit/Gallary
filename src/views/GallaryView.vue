@@ -1,7 +1,7 @@
 <template>
     <h1>Gallary of {{ $route.params.id }}</h1>
   <div class="gallary">
-    <Gall :gallary="gallary" :fold="$route.params.id"/>
+    <Gall :gallary="gallary" :fold="$route.params.id" @curr-fold="getGurrFold" :admin="admin"/>
    
   </div>
 
@@ -17,7 +17,7 @@ export default {
   },  
   props: {
     gallary :  Object,
-  
+    admin:Boolean
   },
   data(){
     return{
@@ -25,10 +25,13 @@ export default {
     }  
   },
   methods:{
-
+    getGurrFold(id){
+      this.$emit('curr-fold', id)   
+    }
   },
   mounted(){
-   console.log(this.id)
+   
+ 
         
   },
   computed:{
@@ -37,8 +40,8 @@ export default {
        // return this.gallary[this.id]
       }
 
-  }
+  },
 
- 
+
 }
 </script>

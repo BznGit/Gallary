@@ -59,7 +59,7 @@ export default {
 }
 .content-item-img{
   height: 85vh;
-  width: 96vw;
+  width: 95vw;
 }
 
 img{

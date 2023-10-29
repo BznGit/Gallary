@@ -1,9 +1,13 @@
 <template>
   <div class="header">
-    <input type="text" placeholder="        Поиск" @input="searching">
-    <div class="menu" @click="openEditMenu">
+    <h1 style="color: aliceblue">Gallary</h1>
+    <div class="right">
+          <div class="sign" @click="signin">{{out}}</div>
+    <div class="menu" @click="openEditMenu" v-if = "admin">
       <img src="../assets/menu.svg">
     </div>
+    </div>
+
   </div>
 
 </template>
@@ -12,12 +16,17 @@
 export default {
   name: 'HeaderComp',
   props: {
-    msg: String
+    admin:Boolean,
+    out:String
   },
   methods:{
     openEditMenu(){
       console.log('dede')
       this.$emit('open-menu')
+    },
+    signin(){
+      console.log('open-signin')
+      this.$emit('open-signin')
     },
     searching(src){
    
@@ -38,6 +47,9 @@ export default {
   height: 60px;
   justify-content: space-between;
 }
+h1{
+  margin-left: 30px;
+}
 input {
   display: flex;
   height: 50%;
@@ -49,12 +61,29 @@ input {
   border-radius: 5px;
  
 }
-input::-webkit-input-placeholder { color: white; }
+input::-webkit-input-placeholder { color: white; padding-left: 15%;}
+.right{
+  display: flex;
+  width: max-content;
+}
+.sign{
+  display: flex;
+  color: aliceblue;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
+  cursor: pointer;
+
+}
+.sign:hover{
+  transform: scale(1.2);
+}
 .menu{
   display: flex;
   margin-right: 30px;
   width: 50px;
   cursor: pointer;
+  color: aliceblue;
 }
 .menu:hover{
   transform: scale(1.2);

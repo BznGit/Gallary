@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <defs>
+  <filter id="svg_1_blur">
+   <feGaussianBlur in="SourceGraphic" stdDeviation="0.3"/>
+  </filter>
+  <filter id="svg_7_blur">
+   <feGaussianBlur in="SourceGraphic" stdDeviation="0.1"/>
+  </filter>
+ </defs>
+ <g class="layer">
+  <title>Layer 1</title>
+  <g id="svg_8"/>
+  <g id="svg_9">
+   <path d="m240.503466,209.478919l22.000009,-44.000011l58.666686,0l22.000002,44.000011l-22.000002,44.000011l-58.666686,0l-22.000009,-44.000011z" fill="#003f7f" filter="url(#svg_7_blur)" id="svg_7" stroke="#003f7f" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5"/>
+   <rect fill="#003f7f" filter="url(#svg_1_blur)" height="115.999998" id="svg_1" rx="11" ry="11" stroke="#003f7f" stroke-width="5" width="179.999997" x="238.299992" y="184.499992"/>
+  </g>
+ </g>
+</svg>

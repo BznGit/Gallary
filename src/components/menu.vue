@@ -2,31 +2,15 @@
   <div class="back" @click="closeMenu"></div>
     <div class="circle-menu">
       <div class="circle">
-          <div class="circle-sector sector-01" @click="addFolder">
+          <div class="circle-sector sector-01" @click="addFolder" v-if="!currFold">
               <div class="sector-text">
               <!--  <img  class="img" src="../assets/add.svg">
                 <img  class="img vis" src="../assets/addWhite.svg">-->
                 <span>Добавить папку</span>
               </div>
           </div>
-          <div class="circle-sector sector-02" >
-              <div class="sector-text">
-              <!--  <img  class="img " src="../assets/import.svg">
-                <img  class="img vis" src="../assets/importWhite.svg">-->
-            
-                <span>Удалить</span>
-                <span>картинку</span>
-              </div>
-          </div>
-          <div class="circle-sector sector-03" >
-              <div class="sector-text">
-                <!--<img  class="img " src="../assets/edit.svg">
-                <img  class="img vis" src="../assets/editWhite.svg">-->
-                <span>Удалить папку</span>
-              </div>
-          </div>
-          <div class="circle-sector sector-04 " >
-              <div class="sector-text" >
+            <div class="circle-sector sector-04 " >
+              <div class="sector-text"  @click="addFile" v-if="currFold">
               <!--  <img  class="img" src="../assets/export.svg">
                 <img  class="img vis" src="../assets/exportWhite.svg">-->
                 <span>Добавить</span>
@@ -39,21 +23,33 @@
 </template>
 
 <script>
+
 export default {
   name: 'MenuMain',
   props: {
-    msg: String
+    msg: String,
+    currFold: String
   },
   methods:{
-  
+    signin(){
+      console.log('open-signin')
+      this.$emit('open-signin')
+    },
     addFolder(){
       console.log('add folder')
       this.$emit('add-folder')
     },
+    addFile(){
+      console.log('add folder')
+      this.$emit('add-file')
+    },
     closeMenu(){
       this.$emit('close-menu')
     }
-  }
+
+    
+  },
+
 }
 </script>
 
